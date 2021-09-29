@@ -21,11 +21,14 @@ router.get('/recipes', async (req, res) => {
     const {name} = req.query;
     //compruebo si no me mandan nada por query
     if(typeof name === 'undefined'){
+        const recipesInDB = await Recipe.findAll();
         const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api_key}&&addRecipeInformation=true&&number=100`);
         
+        const allInfo = recipesInDB.concat(recipes.data.results)
+
         if(recipes.length <= 0) return res.status(404).send('There is no recipe with that name')
         
-        return res.json(recipes.data.results);
+        return res.json(allInfo);
     }
     const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api_key}&&titleMatch=${name}&&addRecipeInformation=true&&number=100`);
 
@@ -53,6 +56,85 @@ router.get('/recipes', async (req, res) => {
 })
 
 
+router.get('/recipes/:id', async (req, res) => {
+    const {id} = req.params;
+    if(id.length === 36) {
+        
+        const element = await Recipe.findByPk(id);
+        return res.json(element)
+
+       
+    } else {
+       try{
+            const recipeAPI = await axios.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${api_key}`);
+        
+            const {image, title, dishTypes, diets, summary, spoonacularScore, healthScore, instructions} = recipeAPI.data
+            
+            return res.json({image, title, dishTypes, diets, summary, spoonacularScore, healthScore, instructions});
+       } catch(e) {
+           res.status(404).send(e)
+       }
+        
+
+    }
+
+
+
+})
+
+
+router.get('/types', async (req, res) => {
+    
+    const dietsList = ['Gluten Free', 'Ketogenic', 'Vegetarian', 'Lacto-Vegetarian', 'Ovo-Vegetarian', 'Vegan', 'Pescetarian', 'Paleo', 'Primal', 'Low FODMAP', 'Whole30']
+
+    for(let i = 0; i < dietsList.length; i++) {
+        
+        const [diets, created] = await Diet.findOrCreate({
+            where: {name: dietsList[i]},
+            defaults: {
+                name: dietsList[i]
+            }
+        })
+        console.log(diets)
+    }
+    // devuelvo al usuario todas las dietas
+    const allOfDiets = await Diet.findAll();
+
+    return res.json(allOfDiets);
+    
+    
+})
+
+
+
+// POST--------------------
+
+router.post('/recipe', async (req, res) => {
+    
+    // Esto me llega por Body
+    const {name, dishSummary, punctuation, healthFood, stepByStep, diet, createdInDb} = req.body;
+
+    // Creo la nueva receta con lo que me llegó por Body
+    const recipeCreated = await Recipe.create({
+        name,
+        dishSummary,
+        punctuation,
+        healthFood,
+        stepByStep,
+        createdInDb,
+        diet
+    })
+
+    const findDiet = await Diet.findAll({
+        where: {
+            name: diet
+        }
+    })
+    await recipeCreated.addDiet(findDiet);
+
+
+    return res.send('Recipe has been created')
+})
 
 
 // Configurar los routers

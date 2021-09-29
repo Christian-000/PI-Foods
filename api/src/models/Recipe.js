@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     punctuation: {
-      type: DataTypes.INTEGER
+      type: DataTypes.REAL
     },
     healthFood: {
       type: DataTypes.INTEGER
