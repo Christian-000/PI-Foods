@@ -1,0 +1,76 @@
+.div{
+    background-image: url("https://www.picgaga.com/uploads/wallpaper/anime-food-wallpapers/Jual6LUAbHWt-anime-girl-art-hd-anime-food-wallpapers.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+
+h1 {
+    font-size: 73px;
+    color: #ba9d47;
+    font-family: Times New Roman;
+    text-shadow: 0px 0px 0 rgb(177,148,62),
+                 1px 1px 0 rgb(168,139,53),
+                 2px 2px 0 rgb(159,130,44),
+                 3px 3px 0 rgb(150,121,35),
+                 4px 4px 0 rgb(141,112,26),
+                 5px 5px 0 rgb(132,103,17),
+                 6px 6px 0 rgb(123,94,8),
+                 7px 7px 0 rgb(114,85,0),
+                 8px 8px 0 rgb(105,76,0),
+                 9px 9px 0 rgb(96,67,0),
+                 10px 10px  0 rgb(87,58,0),
+                 11px 11px 10px rgba(0,0,0,0.48),
+                 11px 11px 1px rgba(0,0,0,0.5),
+                 0px 0px 10px rgba(0,0,0,.2);
+ }
+
+
+.button {
+  appearance: none;
+  background-color: #FFFFFF;
+  border-radius: 40em;
+  border-style: none;
+  box-shadow: #ADCFFF 0 -12px 6px inset;
+  box-sizing: border-box;
+  color: #000000;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -.24px;
+  margin: 0;
+  outline: none;
+  padding: 1rem 1.3rem;
+  quotes: auto;
+  text-align: center;
+  text-decoration: none;
+  transition: all .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button:hover {
+  background-color: #FFC229;
+  box-shadow: #FF6314 0 -6px 8px inset;
+  transform: scale(1.125);
+}
+
+.button:active {
+  transform: scale(1.025);
+}
+
+@media (min-width: 768px) {
+  .button {
+    font-size: 1.5rem;
+    padding: .75rem 2rem;
+  }
+}

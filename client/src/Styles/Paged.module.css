@@ -1,0 +1,21 @@
+.ul {
+list-style-type: none;
+display: flex;
+flex-direction: row;
+}
+.ul li{
+    list-style-type: none;
+    display: flex;
+    flex-direction: row; 
+}
+
+.a{
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid #d1d1d1f5;
+    border-radius: 10px;
+}
+
