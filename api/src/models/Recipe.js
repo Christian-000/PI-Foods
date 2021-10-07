@@ -10,22 +10,28 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true
     },
-    name: {
+    title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    dishSummary: {
-      type: DataTypes.STRING,
+    summary: {
+      type: DataTypes.TEXT,
       allowNull: false
     },
-    punctuation: {
-      type: DataTypes.REAL
+    spoonacularScore: {
+      type: DataTypes.REAL,
+      defaultValue: 0
     },
-    healthFood: {
-      type: DataTypes.INTEGER
+    healthScore: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
     },
-    stepByStep: {
-      type: DataTypes.STRING
+    instructions: {
+      type: DataTypes.TEXT
+    },
+    image: {
+      type: DataTypes.TEXT,
+      defaultValue: 'https://us.123rf.com/450wm/blankstock/blankstock1408/blankstock140801059/30496471-signo-de-interrogaci%C3%B3n-signo-icono-s%C3%ADmbolo-de-ayuda-signo-de-preguntas-frecuentes-bot%C3%B3n-plano-gris-c.jpg?ver=6'
     },
     createdInDb: {
       type: DataTypes.BOOLEAN,
