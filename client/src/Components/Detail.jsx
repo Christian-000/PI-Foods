@@ -37,6 +37,16 @@ export default function Detail(){
                                 <p className={style.p}>{recipeData.instructions === null? 'Do not have Instructions :(' : recipeData.instructions? recipeData.instructions.replace(/\//g, '').replace(/<li>/g, ' ').replace(/<ol>/g, '').replace(/<span>/g, ' ') : recipeData.analyzedInstructions.map(el => el.steps.map(steps=> steps.step))}</p>
                                 
                             </div>
+                            <div>
+                                <h3 className={style.h3}>Diets</h3>
+                                {recipeData.diets?.map(el => <p>{el + ' '}</p> )}
+                            </div>
+                            <div>
+                                <h3 className={style.h3}>Health Score</h3>
+                                
+                                    <p className={style.p}>{recipeData.healthScore}</p>
+                                
+                            </div>
                         </div>
                     )
             }

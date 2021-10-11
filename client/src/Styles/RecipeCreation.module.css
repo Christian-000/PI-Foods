@@ -156,13 +156,15 @@
   }
 
 .dietP {
+  background-color: black;
     border: 5px solid black;
-    border-radius: 2px;
+    border-radius: 10px;
     font-weight: 800;
-    color: #27278C;
+    color: white;
     font-size: 25px;
     display: block;
     position: static;
+    margin: 5px;
 }
 
 .select {
