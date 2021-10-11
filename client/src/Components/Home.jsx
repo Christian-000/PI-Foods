@@ -4,10 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRecipes, filterRecipesByDiet, orderByName } from "../Actions";
 import { Link } from "react-router-dom";
 import Card from "./Card";
-import { Fragment } from "react";
 import Paged from "./Paged";
 import SearchBar from "./SearchBar";
 import styles from '../Styles/Home.module.css'
+import Loading from "./Loading";
+import Error from "./Error";
 
 export default function Home() {
 
@@ -25,18 +26,20 @@ export default function Home() {
         setCurrentPage(numberPage);
     }
 
+    const [loading, setLoading] = useState(true)
+
     // Estado que voy a usar para forzar el renderizado de mi componente
     const [orden, setOrden] = useState('');
     
     //quiero renderizar mis recetas cuando mi componente se monta
     useEffect(() => {
-        dispatch(getRecipes());
+        dispatch(getRecipes()).then(setLoading(false));
     },[dispatch])
 
     // funciones controladoras
     function handleClick(e) {
         e.preventDefault();
-        dispatch(getRecipes);
+        document.location.reload();
     }
     
     function handleFilteredDiets(e) {
@@ -49,14 +52,27 @@ export default function Home() {
         setCurrentPage(1);
         setOrden(`Ordenado ${e.target.value}`)
     }
-
+    
+    if(loading){
+        return <Loading/>
+    }else {
 
     return (
         <div className={styles.container}>
-            <Link to='/recipe'>Make your own recipe</Link>
-            <button onClick={e => handleClick(e)}>Load Recipes</button>
-            <div>
-                <select onChange={e => handleFilteredDiets(e)}>
+            
+            <div className={styles.center}>
+                <Link to='/recipe'>
+                    <div className={styles.btn}>
+                        <a href="">
+                            <span>Make your own recipe</span>
+                        </a>
+                    </div>
+                </Link>
+            </div>
+            
+            <button onClick={e => handleClick(e)} className={styles.reloadButton}>Reload</button>
+            
+                <select onChange={e => handleFilteredDiets(e)} className={styles.select}>
                     <option value="All">All</option>
                     <option value="gluten free">Gluten Free</option>
                     <option value="dairy free">Dairy Free</option>
@@ -68,7 +84,7 @@ export default function Home() {
                     <option value="fodmap friendly">Low FODMAP</option>
                     <option value="whole 30">Whole30</option>
                 </select>
-                <select onChange={(e) => hanldeSort(e)}>
+                <select onChange={(e) => hanldeSort(e)} className={styles.select}>
                     <option value='asc'>Ascending</option>
                     <option value='desc'>Descending</option>
                     <option value="score">Higher score</option>
@@ -81,18 +97,22 @@ export default function Home() {
                 />
                 </div>
                 <SearchBar/>
-                {
+                
+                <div className={styles.divCard}>
+
+                {allRecipes === 'ERROR' ? <Error/> :
                     currentRecipes?.map((el) => {
                         return (
-                            <Fragment key={el.title}>
-                                <Card title={el.title} image={el.image} diets={el.createdInDb? el.diets.map(e => e.name): el.diets} id={el.id} key={el.id}/>
-                            </Fragment>
+                            <Link to={`/detail/${el.id}`}>
+                                <Card title={el.title} image={el.image} diets={el.createdInDb? el.diets.map(e => '| ' + e.name + ' | '):'| ' + el.diets + ' | '} id={el.id} key={el.id}/>
+                            </Link>
                         )
-                    })
+                    }) 
                 }
-
-            </div>
+                </div>
+            
         </div>
     )
 
+}
 }

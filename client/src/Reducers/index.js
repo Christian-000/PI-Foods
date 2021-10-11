@@ -37,14 +37,6 @@ export default function rootReducer(state = initialState, action){
             }
         case 'FILTER_RECIPES_BY_DIET':
             const recipes = state.allRecipes;
-            // const recipeFilter =
-            // action.payload === "All"
-            // ? recipes
-            // : recipes.filter((el) =>
-            //    el.createdInDb
-            //     ? el.diets.filter((e) => e.name.includes(action.payload)) 
-            //     : el.diets.includes(action.payload)
-            // );
             let recipeFilter = [];
             if(action.payload === 'All'){
                 recipeFilter = recipes
@@ -113,6 +105,11 @@ export default function rootReducer(state = initialState, action){
                 };
               }
               break;
+        case 'ERROR_404':
+          return {
+            ...state,
+            recipes: 'ERROR'
+          }
         default:
             return state;
     }

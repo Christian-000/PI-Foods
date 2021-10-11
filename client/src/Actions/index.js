@@ -20,7 +20,9 @@ export function getRecipesName(name){
                 payload: json.data
             })
         } catch (error) {
-            console.log(error)
+            return dispatch({
+                type: 'ERROR_404'
+            })
         }
     }
 }

@@ -27,7 +27,6 @@ router.get('/recipes', async (req, res) => {
                 attributes: ['name']
             }
         })
-        console.log('RECIPES IN DB',recipesInDB)
         const recipes = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api_key}&&addRecipeInformation=true&&number=100`);
         
         const allInfo = recipesInDB.concat(recipes.data.results)
@@ -103,18 +102,27 @@ router.get('/recipes/:id', async (req, res) => {
 
 router.get('/types', async (req, res) => {
     
-    const typesApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api_key}&number=100&addRecipeInformation=true`)
-      const types = await typesApi.data.results.map((result) => {
-        return result.diets; 
-      });
-      let final = types.flat();
-      final.forEach((e) => {
+    // const typesApi = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${api_key}&number=100&addRecipeInformation=true`)
+    //   const types = await typesApi.data.results.map((result) => {
+    //     return result.diets; 
+    //   });
+    //   let final = types.flat();
+    //   final.forEach((e) => {
+    //     Diet.findOrCreate({
+    //       where: { name: e },
+    //     });
+    //   });
+
+    const diets = ["dairy free", "lacto ovo vegetarian", "vegan", "gluten free", "paleolithic", "primal", "pescatarian", "fodmap friendly", "whole 30"]
+    
+    diets.forEach(el => {
         Diet.findOrCreate({
-          where: { name: e },
+            where: {name: el}
         });
-      });
-      const allTypes = await Diet.findAll()
-      res.send(allTypes)
+    });
+    
+    const allTypes = await Diet.findAll()
+    res.send(allTypes)
     
     
 })

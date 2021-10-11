@@ -4,9 +4,14 @@ const session = require('supertest-session');
 const app = require('../../src/app.js');
 const { Recipe, conn } = require('../../src/db.js');
 
+const axios = require('axios')
+
+
+
 const agent = session(app);
 const recipe = {
-  name: 'Milanea a la napolitana',
+  title: 'Milanea a la napolitana',
+  summary: 'Milanga'
 };
 
 describe('Recipe routes', () => {
@@ -22,3 +27,24 @@ describe('Recipe routes', () => {
     );
   });
 });
+
+const arrayFn = async () => {
+  let arr = await axios.get('http://localhost:3001/types');
+  return arr = arr.data
+  }
+
+describe('GET /types', () => {
+  it('should be a array', async() => {
+    
+    
+    let arr = await arrayFn();
+    let arrValidator = Array.isArray(arr);
+    expect(arrValidator).to.equal(true)
+  });
+
+  it('The array must contain the diets', async () => {
+    //copiar y pegar el output de postman
+    let arr = await arrayFn();
+    expect(arr.length).to.equal( 9 );
+  })
+})

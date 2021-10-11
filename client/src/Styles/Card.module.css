@@ -1,0 +1,57 @@
+ .card {
+    /* display: grid; 
+     grid-template-columns: 300px;
+    grid-template-areas: "image" "text"; */
+
+    background-color: rgba(223, 211, 174, 0.78);
+    border-radius: 18px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
+    font-family: roboto;
+    text-align: center;
+}
+.card a {
+    text-decoration: none;
+
+}
+.image {
+
+    grid-area: image;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  background-size: cover;
+  }
+
+.cardText {
+    grid-area: text;
+  margin: 25px;
+}
+
+.cardText p {
+    color:#A55353;
+  font-size:25px;
+  font-weight: 300;
+} 
+
+.cardText h3 {
+    margin-top:0px;
+  font-size:40px;
+  background: #0C1206;
+background: -webkit-linear-gradient(to right, #0C1206 0%, #CF1512 96%);
+background: -moz-linear-gradient(to right, #0C1206 0%, #CF1512 96%);
+background: linear-gradient(to right, #0C1206 0%, #CF1512 96%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+
+
+.card:hover {
+    transform: scale(1.15);
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+  }
+  .card {
+    transition: 0.5s ease;
+    cursor: pointer;
+    margin:30px;
+  }
+
