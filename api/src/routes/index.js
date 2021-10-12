@@ -68,7 +68,17 @@ router.get('/recipes/:id', async (req, res) => {
     const {id} = req.params;
     if(id.length === 36) {
         
-        const element = await Recipe.findByPk(id);
+        const element = await Recipe.findAll({
+            where: {
+                id: id
+            },
+            include: {
+                model: Diet,
+                through: {
+                    attributes: []
+                }
+            }
+        });
         return res.json(element)
 
        
@@ -134,8 +144,13 @@ router.get('/types', async (req, res) => {
 router.post('/recipe', async (req, res) => {
     
     // Esto me llega por Body
-    const {title, summary, spoonacularScore, healthScore, instructions, diets, createdInDb, image} = req.body;
+    const {title, summary, spoonacularScore, healthScore, diets, createdInDb, image} = req.body;
 
+    let instructions = req.body.instructions
+
+    if(instructions === ""){
+        instructions = "Do not have instructions."
+    }
     // Creo la nueva receta con lo que me llegó por Body
     const recipeCreated = await Recipe.create({
         title,
@@ -157,7 +172,6 @@ router.post('/recipe', async (req, res) => {
 
     return res.send('Recipe has been created')
 })
-
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);

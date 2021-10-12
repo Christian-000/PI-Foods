@@ -27,7 +27,8 @@ module.exports = (sequelize) => {
       defaultValue: 0
     },
     instructions: {
-      type: DataTypes.TEXT
+      type: DataTypes.TEXT,
+      defaultValue: 'Do not have Instrucctions.'
     },
     image: {
       type: DataTypes.TEXT,
