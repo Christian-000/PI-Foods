@@ -33,7 +33,7 @@ export default function Home() {
     
     //quiero renderizar mis recetas cuando mi componente se monta
     useEffect(() => {
-        dispatch(getRecipes()).then(setLoading(false));
+        dispatch(getRecipes()).then(() => setLoading(false));
     },[dispatch])
 
     // funciones controladoras
